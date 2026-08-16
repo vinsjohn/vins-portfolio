@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { signInWithPopup, signOut, onAuthStateChanged, User } from 'firebase/auth';
+import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import type { User } from 'firebase/auth';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc } from 'firebase/firestore';
 import { auth, db, storage, googleProvider } from '../firebase';

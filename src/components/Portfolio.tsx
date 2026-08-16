@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { PROJECTS } from '../constants';
-import { Project } from '../types';
+import type { Project } from '../types';
 
 export const Portfolio: React.FC = () => {
   const [filter, setFilter] = useState('All');
