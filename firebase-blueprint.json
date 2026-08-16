@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "Photo": {
+      "title": "Photo",
+      "description": "A photo to be displayed in the portfolio gallery.",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the photo."
+        },
+        "alt": {
+          "type": "string",
+          "description": "Alternative text for the photo."
+        },
+        "caption": {
+          "type": "string",
+          "description": "Caption or category of the photo."
+        },
+        "order": {
+          "type": "number",
+          "description": "Order in which to display the photo."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the photo was added."
+        }
+      },
+      "required": ["url", "alt", "caption"]
+    },
+    "Document": {
+      "title": "Document",
+      "description": "A PDF or document to be displayed on the site.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the document."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the document."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the document (e.g., Portfolio, Album)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the document was added."
+        }
+      },
+      "required": ["title", "url"]
+    }
+  },
+  "firestore": {
+    "/photos/{photoId}": {
+      "schema": {
+        "$ref": "#/entities/Photo"
+      },
+      "description": "Collection of photos for the gallery."
+    },
+    "/documents/{documentId}": {
+      "schema": {
+        "$ref": "#/entities/Document"
+      },
+      "description": "Collection of downloadable documents and PDFs."
+    }
+  }
+}
