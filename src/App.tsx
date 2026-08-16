@@ -1,4 +1,3 @@
-// BUG FIX: Remove CONNECTING status and use static status
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Instagram, Linkedin, Twitter, Globe } from 'lucide-react';
@@ -6,15 +5,16 @@ import { Loader } from './components/Loader';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { Stats } from './components/Stats';
+import { CaseStudies } from './components/CaseStudies';
+import { ProofBar } from './components/ProofBar';
 import { Portfolio } from './components/Portfolio';
 import { Photos } from './components/Photos';
+import { About } from './components/About';
 import { VideoModal } from './components/VideoModal';
 import { ContactForm } from './components/ContactForm';
 import { AdminPanel } from './components/AdminPanel';
 import { Pricing } from './components/Pricing';
-import { Clients } from './components/Clients';
-import { SERVICES, TESTIMONIALS } from './constants';
+import { SERVICES } from './constants';
 
 const App: React.FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -31,18 +31,18 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen font-body selection:bg-[#CAFF00] selection:text-black">
+    <div className="relative min-h-screen font-body selection:bg-[#CAFF00] selection:text-black grain-overlay scanlines">
       <Loader />
       <CustomCursor />
       <Navbar />
       <VideoModal isOpen={isVideoModalOpen} onClose={() => setIsVideoModalOpen(false)} />
-
       <AdminPanel isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)} />
 
       <main>
+        {/* ═══ 1. HERO — Straight into work ═══ */}
         <Hero />
 
-        {/* Live Status Bar */}
+        {/* ═══ Live Status Bar ═══ */}
         <div className="relative z-10 overflow-hidden py-3 border-y border-[#CAFF00]/10 bg-black/85">
           <div className="flex whitespace-nowrap animate-marquee">
             {[1, 2].map((i) => (
@@ -61,16 +61,22 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        <Stats />
+        {/* ═══ 2. CASE STUDIES — The backbone ═══ */}
+        <CaseStudies />
 
-        <Clients />
+        {/* ═══ 3. PROOF BAR — Stats + Clients + Testimonials ═══ */}
+        <ProofBar />
 
-        {/* Services */}
+        {/* ═══ 4. RANGE — Portfolio + Photos grid ═══ */}
+        <Portfolio />
+        <Photos />
+
+        {/* ═══ 5. ABOUT — Short, credibility-focused ═══ */}
+        <About />
+
+        {/* ═══ 6. SERVICES ═══ */}
         <section id="services" className="bg-black py-24 px-6 md:px-12">
-          <div className="font-mono-tech text-[0.57rem] tracking-[0.45em] text-[#CAFF00] flex items-center gap-3.5 uppercase mb-3.5">
-            <span className="w-5 h-[1px] bg-[#CAFF00] shadow-[0_0_4px_#CAFF00]" />
-            What I Do
-          </div>
+          <div className="section-label mb-4">What I Do</div>
           <h2 className="font-heading text-3xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight mb-12">
             SERVICES FOR<br /><span className="text-[#CAFF00]">PREMIUM CLIENTS</span>
           </h2>
@@ -80,6 +86,7 @@ const App: React.FC = () => {
                 key={svc.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: idx * 0.1, duration: 0.8 }}
                 className="bg-black p-10 md:p-12 relative overflow-hidden group hover:bg-[#CAFF00]/5 transition-colors"
               >
@@ -110,64 +117,15 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* About */}
-        <section id="about" className="bg-[#1F2029] flex flex-col-reverse lg:grid lg:grid-cols-2 min-h-[85vh]">
-          <div className="p-12 md:p-20 flex flex-col justify-center">
-            <div className="font-mono-tech text-[0.57rem] tracking-[0.45em] text-[#CAFF00] flex items-center gap-3.5 uppercase mb-3.5">
-              <span className="w-5 h-[1px] bg-[#CAFF00] shadow-[0_0_4px_#CAFF00]" />
-              About
-            </div>
-            <div className="font-heading text-3xl md:text-5xl font-black text-white uppercase tracking-wider leading-tight mt-5">
-              PROFESSIONAL<br />
-              <span className="text-[#CAFF00]">VISUAL</span><br />
-              STORYTELLER
-            </div>
-            <p className="font-light text-[0.89rem] leading-relaxed text-[#B5B6C7] mt-6 max-w-md">
-              I'm Vins John — a Dubai-based Videographer, Video Editor, and Visual Storyteller specializing in real estate, corporate, and brand-driven content. With hands-on experience across photography, videography, editing, and post-production, I help brands transform ideas into clear, engaging visual stories.
-            </p>
-            <p className="font-light text-[0.89rem] leading-relaxed text-[#B5B6C7] mt-6 max-w-md">
-              Having worked closely with real estate teams, media studios, and growing brands in the UAE, I bring an end-to-end approach to content creation — from concept and shoot planning to final delivery optimized for digital platforms.
-            </p>
-            <div className="font-mono-tech text-[0.56rem] tracking-[0.38em] text-[#CAFF00] mt-9 mb-3.5 uppercase">// Serving Industries</div>
-            <div className="flex flex-wrap gap-2">
-              {['⚙️ EPC Companies', '🏗️ PMC Firms', '🏢 Corporate', '🏠 Real Estate', '📡 Media & Comms', '🌐 Global Remote'].map(chip => (
-                <div key={chip} className="font-mono-tech text-[0.56rem] tracking-[0.2em] text-[#B5B6C7] border border-[#B5B6C7]/15 px-4 py-2 uppercase hover:text-[#CAFF00] hover:border-[#CAFF00]/30 transition-all">
-                  {chip}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex bg-black items-center justify-center relative overflow-hidden min-h-[300px] py-12 lg:py-0">
-            <div className="absolute top-5 left-5 w-12 h-12 border-t border-l border-[#CAFF00]/20" />
-            <div className="w-[320px] h-[440px] relative border border-[#CAFF00]/15 flex flex-col items-center justify-center gap-2.5">
-              <div className="absolute inset-3 border border-[#CAFF00]/5 pointer-events-none" />
-              <img 
-                src="https://lh3.googleusercontent.com/sitesv/APaQ0SSXlZt3pPgERVuQ0wYtnn7csWyChVo8hy4pa9wWvQbeD8muqYOcNltFfMYdbthzDxZxnNKsa9BGM1-cGjRThixoEdoG8ub8Wyn8Cuwfe4f6qdrR0khlfOEONSsGFS_xpcMXP3TfzXMMD8s6VZBF_dsXpALiFWEASxEo0-yVS6bHcGSKQvEbTu5N=w16383" 
-                alt="Vins John" 
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover grayscale brightness-75"
-              />
-              <div className="absolute bottom-5 right-5 w-12 h-12 border-b border-r border-[#CAFF00]/20" />
-            </div>
-          </div>
-        </section>
-
-        <Portfolio />
-
-        <Photos />
-
-        {/* Reel */}
+        {/* ═══ 7. SHOWREEL ═══ */}
         <section id="reel" className="bg-black py-24 px-6 md:px-12 text-center">
-          <div className="font-mono-tech text-[0.57rem] tracking-[0.45em] text-[#CAFF00] flex items-center justify-center gap-3.5 uppercase mb-3.5">
-            <span className="w-5 h-[1px] bg-[#CAFF00] shadow-[0_0_4px_#CAFF00]" />
-            Watch
-          </div>
+          <div className="section-label justify-center mb-4">Watch</div>
           <h2 className="font-heading text-3xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight mb-12">
             THE <span className="text-[#CAFF00]">SHOWREEL</span>
           </h2>
           <div className="max-w-4xl mx-auto aspect-video bg-[#1F2029] border border-[#CAFF00]/10 relative flex items-center justify-center overflow-hidden group">
             <div className="absolute inset-0 opacity-30 pixel-grid" />
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1536240478700-b869ad10e128?w=1200&q=80')] bg-cover bg-center brightness-[0.25] saturate-[0.4]" />
+            <div className="absolute inset-0 bg-[url('/hero_reel.jpg')] bg-cover bg-center brightness-[0.25] saturate-[0.4]" />
             
             <button 
               onClick={() => setIsVideoModalOpen(true)}
@@ -183,17 +141,13 @@ const App: React.FC = () => {
           <div className="font-mono-tech text-[0.56rem] tracking-[0.3em] text-[#B5B6C7]/30 uppercase mt-4">↑ CLICK TO PLAY CINEMATIC REEL</div>
         </section>
 
-        {/* Process */}
+        {/* ═══ 8. PROCESS ═══ */}
         <section id="process" className="bg-[#1F2029] py-24 px-6 md:px-12">
-          <div className="font-mono-tech text-[0.57rem] tracking-[0.45em] text-[#CAFF00] flex items-center gap-3.5 uppercase mb-3.5">
-            <span className="w-5 h-[1px] bg-[#CAFF00] shadow-[0_0_4px_#CAFF00]" />
-            How I Work
-          </div>
+          <div className="section-label mb-4">How I Work</div>
           <h2 className="font-heading text-3xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight mb-16">
             THE <span className="text-[#CAFF00]">PROCESS</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 relative">
-            <div className="hidden lg:block absolute top-8 left={[8%]} right={[8%]} h={[1px]} bg-gradient-to-r from-transparent via-[#CAFF00]/30 to-transparent" />
             {[
               { step: '01', title: 'Brief', desc: 'We define your goals, audience, message, and technical requirements.' },
               { step: '02', title: 'Concept', desc: 'Shot lists, storyboards, and a production plan tailored to your brand.' },
@@ -205,6 +159,7 @@ const App: React.FC = () => {
                 key={item.step}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: idx * 0.1, duration: 0.8 }}
                 className="text-center px-5 group"
               >
@@ -218,52 +173,13 @@ const App: React.FC = () => {
           </div>
         </section>
 
+        {/* ═══ 9. PRICING ═══ */}
         <Pricing />
 
-        {/* Testimonials */}
-        <section id="testimonials" className="bg-[#1F2029] py-24 px-6 md:px-12">
-          <div className="font-mono-tech text-[0.57rem] tracking-[0.45em] text-[#CAFF00] flex items-center gap-3.5 uppercase mb-3.5">
-            <span className="w-5 h-[1px] bg-[#CAFF00] shadow-[0_0_4px_#CAFF00]" />
-            Client Reviews
-          </div>
-          <h2 className="font-heading text-3xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight mb-12">
-            WHAT THEY <span className="text-[#CAFF00]">SAY</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-[#B5B6C7]/10">
-            {TESTIMONIALS.map((testi, idx) => (
-              <motion.div 
-                key={testi.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1, duration: 0.8 }}
-                className="bg-[#1F2029] p-10 relative overflow-hidden hover:bg-[#CAFF00]/5 transition-colors"
-              >
-                <div className="absolute top-2 right-4 font-heading text-8xl font-black text-[#CAFF00]/5 leading-none">"</div>
-                <div className="flex gap-1 text-[#CAFF00] text-[0.7rem] mb-4 drop-shadow-[0_0_6px_rgba(202,255,0,0.22)]">
-                  {'★★★★★'.split('').map((s, i) => <span key={i}>{s}</span>)}
-                </div>
-                <p className="font-light text-[0.87rem] leading-relaxed text-[#B5B6C7] italic mb-6">"{testi.text}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 border border-[#CAFF00]/30 flex items-center justify-center font-heading text-base font-extrabold text-[#CAFF00]">
-                    {testi.initial}
-                  </div>
-                  <div>
-                    <div className="font-heading text-[0.76rem] font-extrabold text-white uppercase tracking-wider">{testi.author}</div>
-                    <div className="font-mono-tech text-[0.52rem] tracking-[0.2em] text-[#CAFF00] uppercase mt-0.5">{testi.role}</div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* Contact */}
+        {/* ═══ 10. CONTACT ═══ */}
         <section id="contact" className="bg-black py-24 px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
           <div>
-            <div className="font-mono-tech text-[0.57rem] tracking-[0.45em] text-[#CAFF00] flex items-center gap-3.5 uppercase mb-3.5">
-              <span className="w-5 h-[1px] bg-[#CAFF00] shadow-[0_0_4px_#CAFF00]" />
-              Get In Touch
-            </div>
+            <div className="section-label mb-4">Get In Touch</div>
             <h2 className="font-heading text-3xl md:text-6xl font-black text-white uppercase tracking-wider leading-tight mb-5">
               DROP US<br />A <span className="text-[#CAFF00]">LINE.</span>
             </h2>
@@ -305,6 +221,7 @@ const App: React.FC = () => {
         </section>
       </main>
 
+      {/* ═══ FOOTER ═══ */}
       <footer className="bg-[#1F2029] border-t border-[#CAFF00]/10 py-10 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
         <a href="#hero" className="flex flex-col gap-0.5">
           <div className="font-mono-tech text-[0.7rem] tracking-[0.42em] text-white uppercase">▪ PIXEL WHITE STUDIO</div>
@@ -313,7 +230,7 @@ const App: React.FC = () => {
           </div>
         </a>
         <ul className="flex flex-wrap justify-center gap-6">
-          {['Services', 'Work', 'Photos', 'About', 'Contact'].map(link => (
+          {['Work', 'Portfolio', 'About', 'Services', 'Contact'].map(link => (
             <li key={link}>
               <a href={`#${link.toLowerCase()}`} className="font-mono-tech text-[0.53rem] tracking-[0.24em] text-[#B5B6C7] hover:text-[#CAFF00] uppercase transition-colors">{link}</a>
             </li>

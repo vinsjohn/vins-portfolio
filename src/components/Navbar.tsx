@@ -14,11 +14,10 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Services', href: '#services' },
-    { name: 'Work', href: '#work' },
-    { name: 'Photos', href: '#photos' },
-    { name: 'Reel', href: '#reel' },
+    { name: 'Work', href: '#case-studies' },
+    { name: 'Portfolio', href: '#work' },
     { name: 'About', href: '#about' },
+    { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
   ];
 

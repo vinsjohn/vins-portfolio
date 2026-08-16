@@ -1,4 +1,45 @@
-import type { Service, Project, Testimonial } from './types';
+import type { Service, Project, Testimonial, CaseStudy } from './types';
+
+/* ─────────────────────────────────────────────────────────────
+   CASE STUDIES
+   [NEED YOUR INPUT] Replace placeholder briefs/results with
+   your real project details and outcomes.
+   ───────────────────────────────────────────────────────────── */
+export const CASE_STUDIES: CaseStudy[] = [
+  {
+    id: 'cs-ozr',
+    index: '01',
+    client: 'OZR Real Estate',
+    industry: 'Real Estate · Dubai',
+    brief: '[NEED YOUR INPUT] What was OZR Real Estate\'s brief or problem? E.g., "Needed high-quality property walkthrough videos for 12 premium listings to boost online engagement."',
+    deliverables: ['Property Videos', 'Drone Footage', 'Social Media Edits', 'Brand Film'],
+    result: '[NEED YOUR INPUT] What was the outcome? E.g., "Delivered 12 property videos in 3 weeks, content used across all social channels."',
+    image: '/project_realestate.jpg',
+    tags: ['Real Estate', 'Video Production', 'Drone', 'Dubai'],
+  },
+  {
+    id: 'cs-epc',
+    index: '02',
+    client: 'Leading EPC Firm',
+    industry: 'EPC · Engineering · Dubai',
+    brief: '[NEED YOUR INPUT] What did this EPC company need? E.g., "Required a corporate documentary showcasing their mega infrastructure project for investor presentations."',
+    deliverables: ['Corporate Documentary', 'Site Coverage', 'Interview Shoots', 'Post-Production'],
+    result: '[NEED YOUR INPUT] What was the result? E.g., "Film used in board presentations and contributed to securing project extension."',
+    image: '/project_epc.jpg',
+    tags: ['EPC', 'Corporate', 'Documentary', 'Industrial'],
+  },
+  {
+    id: 'cs-corporate',
+    index: '03',
+    client: 'PMC Consultancy',
+    industry: 'PMC · Project Management · UAE',
+    brief: '[NEED YOUR INPUT] What was the brief? E.g., "Needed end-to-end content production for their annual review and brand refresh."',
+    deliverables: ['Brand Video', 'Event Coverage', 'Presentation Design', 'Social Content'],
+    result: '[NEED YOUR INPUT] What was the outcome? E.g., "Annual review video distributed to 500+ stakeholders globally."',
+    image: '/project_corporate.jpg',
+    tags: ['PMC', 'Brand', 'Corporate', 'Event'],
+  },
+];
 
 export const SERVICES: Service[] = [
   {

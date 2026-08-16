@@ -4,7 +4,10 @@
   --lime: #CAFF00;
   --black-deep: #000000;
   --dark: #1F2029;
+  --grey: #B5B6C7;
 }
+
+/* ─── Base ──────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
 }
@@ -15,24 +18,141 @@ body {
   cursor: crosshair;
   overflow-x: hidden;
 }
+
+/* ─── Typography ────────────────────────────────────────── */
+.font-mono-tech { font-family: 'Share Tech Mono', monospace; }
+.font-heading { font-family: 'Mulish', sans-serif; }
+.font-body { font-family: 'Roboto', sans-serif; }
+
+/* ─── Grid Texture ──────────────────────────────────────── */
 .pixel-grid {
   background-image: 
     linear-gradient(rgba(240, 240, 240, 0.024) 1px, transparent 1px),
     linear-gradient(90deg, rgba(240, 240, 240, 0.024) 1px, transparent 1px);
   background-size: 48px 48px;
 }
-.font-mono-tech { font-family: 'Share Tech Mono', monospace; }
-.font-heading { font-family: 'Mulish', sans-serif; }
-.font-body { font-family: 'Roboto', sans-serif; }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb { background: var(--lime); }
+/* ─── Grain / Noise Overlay ─────────────────────────────── */
+.grain-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
 
+/* ─── Scanline Flicker ──────────────────────────────────── */
+.scanlines::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9989;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  animation: scanline-flicker 8s ease-in-out infinite;
+}
+
+@keyframes scanline-flicker {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.15; }
+}
+
+/* ─── Terminal Cursor Blink ─────────────────────────────── */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.terminal-cursor {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* ─── Glitch Effect ─────────────────────────────────────── */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+.glitch-text {
+  animation: glitch 0.3s ease-in-out;
+}
+
+/* ─── Marquee ───────────────────────────────────────────── */
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 .animate-marquee {
   animation: marquee 25s linear infinite;
+}
+
+/* ─── Stagger Reveal (used by kinetic hero type) ────────── */
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%) rotateX(-80deg);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    filter: blur(0);
+  }
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: var(--lime); }
+
+/* ─── Selection ─────────────────────────────────────────── */
+::selection {
+  background: var(--lime);
+  color: #000;
+}
+
+/* ─── Magnetic Button Base ──────────────────────────────── */
+.magnetic-btn {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* ─── Section Label (reusable) ──────────────────────────── */
+.section-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.57rem;
+  letter-spacing: 0.45em;
+  color: var(--lime);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+.section-label::before {
+  content: '';
+  width: 1.25rem;
+  height: 1px;
+  background: var(--lime);
+  box-shadow: 0 0 4px var(--lime);
+}
+
+/* ─── Video Background ──────────────────────────────────── */
+.video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
